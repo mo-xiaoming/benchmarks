@@ -8,9 +8,9 @@
 
       src = self;
 
-      nativeBuildInputs = [ cmake ninja gdb valgrind clang-tools cppcheck ];
+      nativeBuildInputs = [ cmake ninja gdb valgrind clang-tools cppcheck gbenchmark sparsehash ];
 
-      buildInputs = [ spdlog doctest boost ];
+      buildInputs = [ spdlog doctest boost170 ];
 
       doCheck = true;
       checkPhase = "ctest --output-on-failure";
@@ -20,12 +20,12 @@
     };
 
     packages.x86_64-linux = {
-      gcc-pkg = gcc11Stdenv.mkDerivation self.drv-attrs;
+      gcc-pkg = gcc12Stdenv.mkDerivation self.drv-attrs;
       clang-pkg = (llvmPackages_14.stdenv.mkDerivation self.drv-attrs).overrideAttrs (oa: {
         CPATH = lib.makeSearchPathOutput "dev" "include" oa.buildInputs;
       });
     };
 
-    defaultPackage.x86_64-linux = self.packages.x86_64-linux.clang-pkg;
+    defaultPackage.x86_64-linux = self.packages.x86_64-linux.gcc-pkg;
   };
 }

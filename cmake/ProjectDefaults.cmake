@@ -1,16 +1,7 @@
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-include(CheckIPOSupported)
-check_ipo_supported(RESULT result OUTPUT output)
-if(result)
-  message(STATUS "IPO/LTO enabed")
-  set(CMAKE_INTERPROCEDURAL_OPTIMIZATION_Release TRUE)
-else()
-  message(WARNING "IPO/LTO not supported: ${output}")
-endif()
-
 add_library(default_compile_features INTERFACE)
-target_compile_features(default_compile_features INTERFACE cxx_std_23)
+target_compile_features(default_compile_features INTERFACE cxx_std_17)
 
 add_library(default_compile_options INTERFACE)
 target_compile_options(default_compile_options INTERFACE "$<$<NOT:$<CONFIG:Release>>:-U_FORTIFY_SOURCE;-O0;-ggdb3;-fno-omit-frame-pointer;-fno-inline;-fno-sanitize-recover=all>")
