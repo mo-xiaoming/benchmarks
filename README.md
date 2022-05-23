@@ -1,6 +1,6 @@
 # benchmarks of querying {int, sizeof 40 bytes} data
 
-## benchmarks
+## setup
 
 ```
 Run on (8 X 1796.63 MHz CPU s)
@@ -13,6 +13,13 @@ Load Average: 0.29, 0.09, 0.08
 ```
 
 GCC12
+
+## overall
+
+![chart](chart.svg)
+
+## detailed numbers
+
 - 🟩 1st fastest
 - 🟦 2nd fastest
 - 🟧 3rd fastest
@@ -97,16 +104,4 @@ GCC12
 | boost::flat\_map/250             |   361678 ns |
 | 🟩 google::dense\_hash\_map/250  |    25486 ns |
 | sorted\_vector/250               |   310065 ns |
-
-## overall
-
-| container                | 🟩 | 🟦 | 🟧 |
-|--------------------------|----|----|----|
-| google::dense\_hash\_map | 8  | 1  | 0  |
-| boost::unordered\_map    | 1  | 5  | 2  |
-| std::unordered\_map      | 0  | 2  | 6  |
-| sorted\_vector           | 0  | 1  | 0  |
-| std::map                 | 0  | 0  | 1  |
-| boost::flat\_map         | 0  | 0  | 0  |
-
 
