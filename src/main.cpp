@@ -115,14 +115,13 @@ static void bench_sorted_vector(benchmark::State& state) {
   std::vector<int> tags;
   std::vector<Value> values;
   for (const auto& [k, v] : data) {
-    const auto it = std::upper_bound(tags.cbegin(), tags.cend(), k);
-    if (it == tags.cend()) {
-      tags.push_back(k);
-      values.push_back(v);
-    } else {
-      tags.insert(it, k);
-      values.insert(values.cbegin() + (it-tags.cbegin()), v);
+    const auto it = std::lower_bound(tags.cbegin(), tags.cend(), k);
+    if (it != tags.cend() && *it == k) {
+      continue;
     }
+    const auto dis = std::distance(tags.cbegin(), it);
+    tags.insert(it, k);
+    values.insert(values.cbegin() + dis, v);
   }
   for (auto _ : state) {
     for (auto i : access) {
